@@ -46,7 +46,7 @@
         $("#button").click(function() {
             context.drawImage(video, 0, 0, 512, 384);
             imageUrl = canvas.toDataURL();
-            path = "10.123.138.215:8080?bname=martian";
+            path = "http://10.123.138.215:8080?bname=martian";
             $.ajax({
                 method: "POST",
                 url: path,
