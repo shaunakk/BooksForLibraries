@@ -1,11 +1,36 @@
 <html>
+	<head>
+	    <title>Books For Libraries</title>
 
-<head>
-    <title></title>
-</head>
-
-<body>
-</body>
-</body>
-
+	</head>
+	<body>
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">BooksForLibraries</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li  class="active" ><a id="request"href="#">Request</a></li>
+      <li><a id="approve" href="#">Approve</a></li> 
+    </ul>
+  </div>
+</nav>
+<div id="content">
+<div id="requestBook">
+	<label for="#bookName">Book Name </label>
+	<input type="text" id="bookName"/>
+	<button class="btn btn-info" id="makeRequest">Request</button>
+	<p class="bookPrice"></p>
+</div>
+<div id="approveBook">
+	<p>app</p>
+</div>
+</div>
+	    <script src="js/jquery.js"></script>
+	    <script src="js/bootstrap.js"></script>
+	    <script src="js/index.js"></script>
+	    <link rel="stylesheet" href="css/bootstrap.css">
+	    <link rel="stylesheet" href="css/index.css">
+	  
+	</body>
 </html>
