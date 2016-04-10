@@ -2,8 +2,6 @@ $(document).ready(function() {
     $("#chooseBook").hide()
     var canvas = document.getElementById("picture"),
         context = canvas.getContext("2d"),
-        shown = document.getElementById("shown"),
-        ctx = shown.getContext("2d"),
         video = document.getElementById("video"),
         accessCamera = {
             "video": true
@@ -41,18 +39,24 @@ $(document).ready(function() {
         $("#choose").parent().removeClass("active");
     })
     $("#snapshot").click(function() {
-        ctx.drawImage(video, 0, 0, 512, 384);
-        context.drawImage(video, 0, 0, 96, 72);
+        context.drawImage(video, 0, 0, 512, 384);
         imageUrl = canvas.toDataURL("image/jpeg");
-        console.log(imageUrl);
         $.ajax({
-            method: 'POST',
-            url: "http://10.123.139.215:8080?picture=" + imageUrl + "&bname=the+martian",
-            dataType: 'jsonp',
-            data: JSON.stringify({
-                imageData: imageUrl,
-            }),
+            method: 'GET',
+            url: "https://api.havenondemand.com/1/api/sync/ocrdocument/v1?apikey=5af0e6ba-d355-4197-b39f-308af0ab014e&url=https://feministfairytales.files.wordpress.com/2015/06/the-martian.jpg&mode=scene_photo",
+            success: function(data) {
+                var book = data.text_block[0].text
+                book = book.trim().replace(/ /g, "+");
+                book = book.replace("ANDY+EIR", "");
+                book = book.toLowerCase();
+                $.ajax({
+                    method: "GET",
+                    url: "http://192.168.1.143:8080?bname=" + book,
+                    success: function(data) {
+                        console.log(data);
+                    }
+                });
+            }
         });
-        $("#picture").hide();
     });
 });

@@ -13,10 +13,17 @@
 <body>
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-6">.col-md-6
+            <div class="col-md-6" id="userLogin" style="text-align: center;">
+                <p style="font-size: 4.5em">User Login</p>
+                <br>
+                <fb:login-button scope="public_profile,email" onlogin="checkLogin();" data-size="large">
+                </fb:login-button>
+                <fb:login-button data-size="large">
+                    <button onclick="logout()">Logout</button>
+                </fb:login-button>
                 <div style="width: 2;height: 100%;background-color: #cccccc;margin-left: 100%"></div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-6" style="text-align: center" id="librarianLogin">
                 <p style="font-size: 4.5em">Librarian Login</p>
             </div>
         </div>
