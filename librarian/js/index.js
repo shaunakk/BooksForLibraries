@@ -3,6 +3,7 @@ $(document).ready(function() {
     $("#content").hide()
     $("#approveBook").hide()
     $(".sk-rotating-plane").hide()
+  
     setTimeout(function() {
             swal({
                 title: 'Enter Your Passcode:',
