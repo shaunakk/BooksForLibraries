@@ -1,5 +1,5 @@
 $(document).ready(function() {
-
+    $(".hideImage").hide()
     $("#approveBook").hide()
     $(".marginedLeftLoader").hide()
     $("#request").click(function() {
@@ -23,9 +23,18 @@ $(document).ready(function() {
             method: 'GET',
             url: path,
             success: function(data) {
+                $(".hideImage").show()
                 $(".bookPrice").html("Book Price: " + data)
                 $(".marginedLeftLoader").hide()
             }
         })
     });
+    $("#submitApprove").click(function() {
+        swal(
+            'Success!',
+            'The Martian is approved',
+            'success'
+        )
+        $("#bookPanel").remove()
+    })
 })

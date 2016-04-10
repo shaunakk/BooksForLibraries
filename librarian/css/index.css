@@ -1,6 +1,23 @@
 #content{
 	margin-left: 5%
 }
+.panel{
+	padding-right: 5% 
+	display: block;
+}
 .marginedLeftLoader{
 	float: left;
+}
+.hideImage{
+	height:60%;
+}
+.smallImage{
+	height:30%;
+}
+.floatButton{
+	float:right;
+	margin-right:5%;
+}
+.panel-body{
+	margin-left:3%;
 }
