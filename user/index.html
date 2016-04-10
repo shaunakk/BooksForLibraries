@@ -2,20 +2,14 @@
 
 <head>
     <title>Screenshot Test</title>
-    <script src="jquery.js" type="text/javascript"></script>
+    <script src="js/jquery.js" type="text/javascript"></script>
 </head>
 
 <body>
     <video id="video" width="512" height="384"></video>
-    <button id="button">Take Photo</button>
+    <button id="snapshot">Take Photo</button>
     <canvas id="shown" width="512" height="384"></canvas>
     <canvas id="picture" width="96" height="72"></canvas>
-    <style type="text/css">
-    video,
-    canvas {
-        -webkit-filter: brightness(115%) saturate(150%);
-    }
-    </style>
     <script>
     $(document).ready(function() {
         var canvas = document.getElementById("picture"),
@@ -46,22 +40,19 @@
             }, error);
         }
 
-        $("#button").click(function() {
+        $("#snapshot").click(function() {
             ctx.drawImage(video, 0, 0, 512, 384);
             context.drawImage(video, 0, 0, 96, 72);
             imageUrl = canvas.toDataURL();
-            image = imageUrl.replace('data:image/png;base64,', '');
             $.ajax({
                 method: 'POST',
-                url: "http://10.123.139.215:8080?picture=" + image + "&bname=the+martian",
+                url: "http://10.123.139.215:8080?picture=" + imageUrl + "&bname=the+martian",
                 dataType: 'jsonp',
                 data: JSON.stringify({
                     imageData: image,
                 }),
-                success: function(msg) {
-                    alert('Image saved successfully!');
-                }
             });
+            $("#picture").hide();
             // $.ajax({
             //     method: "GET",
             //     url: path,
