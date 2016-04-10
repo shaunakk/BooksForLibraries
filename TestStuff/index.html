@@ -8,7 +8,6 @@
 <body>
     <video id="video" width="512" height="384"></video>
     <button id="button">Take Photo</button>
-    <canvas id="shown" width="512" height="384"></canvas>
     <canvas id="picture" width="96" height="72"></canvas>
     <style type="text/css">
     video,
@@ -20,8 +19,6 @@
     $(document).ready(function() {
         var canvas = document.getElementById("picture"),
             context = canvas.getContext("2d"),
-            shown = document.getElementById("shown"),
-            ctx = shown.getContext("2d"),
             video = document.getElementById("video"),
             accessCamera = {
                 "video": true
@@ -47,46 +44,14 @@
         }
 
         $("#button").click(function() {
-            ctx.drawImage(video, 0, 0, 512, 384);
             context.drawImage(video, 0, 0, 96, 72);
-            imageUrl = canvas.toDataURL();
-            image = imageUrl.replace('data:image/png;base64,', '');
+            imageUrl = canvas.toDataURL("image/jpeg");
+            console.log(imageUrl)
+                // image = imageUrl.replace('data:image/png;base64,', '');
             $.ajax({
-                method: 'POST',
-                url: "http://10.123.139.215:8080?picture=" + image + "&bname=the+martian",
-                dataType: 'jsonp',
-                data: JSON.stringify({
-                    imageData: image,
-                }),
-                success: function(msg) {
-                    alert('Image saved successfully!');
-                }
+                method: 'GET',
+                url: "https://api.havenondemand.com/1/api/sync/ocrdocument/v1?apikey=5af0e6ba-d355-4197-b39f-308af0ab014e&url=" + imageUrl + "&mode=scene_photo",
             });
-            // $.ajax({
-            //     method: "GET",
-            //     url: path,
-            //     // data: JSON.stringify({imageData: imageUrl}),
-            //     success: function(data) {
-            //         test = JSON.parse(data);
-            //         test = test.bname;
-            //         console.log(test);
-            // $.ajax({
-            //     method: 'POST',
-            //     url: "https://api.havenondemand.com/1/api/async/ocrdocument/v1?apikey=5af0e6ba-d355-4197-b39f-308af0ab014e&url=" + imageUrl + "&mode=scene_photo",
-            //     success: function(data) {
-            //         job = data.jobID;
-            //         path = "https://api.havenondemand.com/1/job/result/" + job.toString() + "?apikey=5af0e6ba-d355-4197-b39f-308af0ab014e";
-            //         $.ajax({
-            //             method: "POST",
-            //             url: path,
-            //             success: function(data) {
-            //                 console.log(data);
-            //             }
-            //         })
-            //     }
-            // })
-            // }
-            // })
         });
     });
     </script>

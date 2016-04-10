@@ -1,86 +1,43 @@
 <html>
 
 <head>
-    <title>Screenshot Test</title>
+    <title>Books For Libraries - User</title>
     <script src="js/jquery.js" type="text/javascript"></script>
+    <script src="js/bootstrap.js" type="text/javascript"></script>
+    <script src="js/index.js" type="text/javascript"></script>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="css/index.css">
 </head>
 
 <body>
-    <video id="video" width="512" height="384"></video>
-    <button id="snapshot">Take Photo</button>
-    <canvas id="shown" width="512" height="384"></canvas>
-    <canvas id="picture" width="96" height="72"></canvas>
-    <script>
-    $(document).ready(function() {
-        var canvas = document.getElementById("picture"),
-            context = canvas.getContext("2d"),
-            shown = document.getElementById("shown"),
-            ctx = shown.getContext("2d"),
-            video = document.getElementById("video"),
-            accessCamera = {
-                "video": true
-            },
-            error = function(err) {
-                console.log("Video capture error: ", err.code);
-            };
-        if (navigator.getUserMedia) {
-            navigator.getUserMedia(accessCamera, function(stream) {
-                video.src = stream;
-                video.play();
-            }, error);
-        } else if (navigator.webkitGetUserMedia) {
-            navigator.webkitGetUserMedia(accessCamera, function(stream) {
-                video.src = window.URL.createObjectURL(stream);
-                video.play();
-            }, error);
-        } else if (navigator.mozGetUserMedia) {
-            navigator.mozGetUserMedia(accessCamera, function(stream) {
-                video.src = window.URL.createObjectURL(stream);
-                video.play();
-            }, error);
-        }
-
-        $("#snapshot").click(function() {
-            ctx.drawImage(video, 0, 0, 512, 384);
-            context.drawImage(video, 0, 0, 96, 72);
-            imageUrl = canvas.toDataURL();
-            $.ajax({
-                method: 'POST',
-                url: "http://10.123.139.215:8080?picture=" + imageUrl + "&bname=the+martian",
-                dataType: 'jsonp',
-                data: JSON.stringify({
-                    imageData: image,
-                }),
-            });
-            $("#picture").hide();
-            // $.ajax({
-            //     method: "GET",
-            //     url: path,
-            //     // data: JSON.stringify({imageData: imageUrl}),
-            //     success: function(data) {
-            //         test = JSON.parse(data);
-            //         test = test.bname;
-            //         console.log(test);
-            // $.ajax({
-            //     method: 'POST',
-            //     url: "https://api.havenondemand.com/1/api/async/ocrdocument/v1?apikey=5af0e6ba-d355-4197-b39f-308af0ab014e&url=" + imageUrl + "&mode=scene_photo",
-            //     success: function(data) {
-            //         job = data.jobID;
-            //         path = "https://api.havenondemand.com/1/job/result/" + job.toString() + "?apikey=5af0e6ba-d355-4197-b39f-308af0ab014e";
-            //         $.ajax({
-            //             method: "POST",
-            //             url: path,
-            //             success: function(data) {
-            //                 console.log(data);
-            //             }
-            //         })
-            //     }
-            // })
-            // }
-            // })
-        });
-    });
-    </script>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">BooksForLibraries</a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li class="active"><a id="ocr" href="#">Scan Book Cover</a></li>
+                <li><a id="choose" href="#">Choose a Book</a></li>
+            </ul>
+        </div>
+    </nav>
+    <div id="ocrCover">
+        <div style="text-align: center;">
+            <video id="video" width="512" height="384"></video>
+            <canvas id="shown" width="512" height="384"></canvas>
+            <canvas id="picture" width="96" height="72"></canvas>
+        </div>
+        <br>
+        <div style="text-align: center;">
+            <button id="snapshot" class="btn btn-default">Take Photo</button>
+        </div>
+    </div>
+    <div id="chooseBook" style="text-align: center;">
+        <input type="text" placeholder="Book Title"></input>
+        <br>
+        <br>
+        <button id="submitTitle" class="btn btn-default">Submit</button>
+    </div>
 </body>
 
 </html>
