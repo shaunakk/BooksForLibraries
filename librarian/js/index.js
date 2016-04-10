@@ -1,7 +1,34 @@
 $(document).ready(function() {
-    $(".hideImage").hide()
+    $("nav").hide()
+    $("#content").hide()
     $("#approveBook").hide()
-    $(".marginedLeftLoader").hide()
+    $(".sk-rotating-plane").hide()
+    setTimeout(function() {
+            swal({
+                title: 'Enter Your Passcode:',
+                html: '<br><p><input type="password" id="input-field">',
+                closeOnConfirm: false,
+                allowOutsideClick: false,
+                type: 'question'
+            }).then(function(isConfirm) {
+                if (isConfirm) {
+                    // swal({
+                    //     html: 'You entered: <strong>' +
+                    //         $('#input-field').val() +
+                    //         '</strong>'
+                    // });
+                    swal(
+                        'Success!',
+                        'You are logged in',
+                        'success'
+                    )
+                    pinCheck()
+
+                }
+            })
+        },
+        100)
+
     $("#request").click(function() {
         $("#request").parent().addClass("active")
         $("#approve").parent().removeClass("active")
@@ -12,7 +39,13 @@ $(document).ready(function() {
         $("#approve").parent().addClass("active")
         $("#request").parent().removeClass("active")
         $("#requestBook").hide()
-        $("#approveBook").show()
+        $(".approveLoader").show()
+        var loadInterval = setInterval(function() {
+                $(".approveLoader").remove()
+                $("#approveBook").show()
+                clearInterval(loadInterval)
+            },
+            2000)
     })
     $("#makeRequest").click(function() {
         $(".marginedLeftLoader").show()
@@ -24,8 +57,13 @@ $(document).ready(function() {
             url: path,
             success: function(data) {
                 $(".hideImage").show()
-                $(".bookPrice").html("Book Price: " + data)
+                $(".bookPrice").html("Book Price: USD " + data + "<br> Your Price: USD " + Math.floor(data * 50) / 100)
                 $(".marginedLeftLoader").hide()
+                swal(
+                    'Success!',
+                    'The Martian is requested',
+                    'success'
+                )
             }
         })
     });
@@ -35,6 +73,18 @@ $(document).ready(function() {
             'The Martian is approved',
             'success'
         )
-        $("#bookPanel").remove()
+        $(".bookPanel").remove()
+        $(".appendNone").append("<h5><i>None</i></h5>")
     })
 })
+
+function pinCheck() {
+    $("nav").show()
+    $("#content").show()
+    $("#approveBook").show()
+    $(".sk-rotating-plane").show()
+    $(".hideImage").hide()
+    $(".approveLoader").hide()
+    $("#approveBook").hide()
+    $(".marginedLeftLoader").hide()
+}
