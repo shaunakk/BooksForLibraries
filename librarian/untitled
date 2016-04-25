@@ -1,0 +1,6 @@
+ child = exec("sudo killall mjpg_streamer", function(error, stdout, stderr) {
+        console.log('stdout: ' + stdout);
+        if (error !== null) {
+            console.log('exec error: ' + error);
+        }
+    });
